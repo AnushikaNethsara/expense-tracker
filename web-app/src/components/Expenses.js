@@ -7,29 +7,12 @@ import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
-const Expenses = () => {
+const Expenses = ({ expenses, type }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const { user } = useSelector((state) => state.auth)
-    const { expenses, isLoading, isError, message } = useSelector(
-        (state) => state.expenses
-    )
 
-    useEffect(() => {
-        if (isError) {
-            console.log(message)
-        }
-
-        if (!user) {
-            navigate('/')
-        }
-        dispatch(getExpenses())
-
-        return () => {
-            dispatch(reset())
-        }
-    }, [user, navigate, isError, message, dispatch]);
 
     const editExpense = (expense) => {
         navigate('/addexpense', { state: { expense: expense } });
@@ -45,7 +28,10 @@ const Expenses = () => {
                         <th>Total amount(LKR)</th>
                         <th>Notes</th>
                         <th>Category</th>
-                        <th>Action</th>
+                        {
+                            type == 1 ? <th>Action</th> : null
+                        }
+
                     </tr>
                 </thead>
                 <tbody>
@@ -59,18 +45,23 @@ const Expenses = () => {
                                     <td>{item.totalAmount.toLocaleString()}</td>
                                     <td>{item.notes}</td>
                                     <td>{item.category}</td>
-                                    <td>
-                                        <ButtonGroup>
-                                            <Button variant="danger"
-                                                onClick={() => dispatch(deleteExpense(item._id))}
-                                            >
-                                                <FontAwesomeIcon icon={faTrash} />
-                                            </Button>
-                                            <Button variant="primary" onClick={() => editExpense(item)}>
-                                                <FontAwesomeIcon icon={faEdit} />
-                                            </Button>
-                                        </ButtonGroup>
-                                    </td>
+                                    {
+                                        type == 1 ? (
+                                            <td>
+                                                <ButtonGroup>
+                                                    <Button variant="danger"
+                                                        onClick={() => dispatch(deleteExpense(item._id))}
+                                                    >
+                                                        <FontAwesomeIcon icon={faTrash} />
+                                                    </Button>
+                                                    <Button variant="primary" onClick={() => editExpense(item)}>
+                                                        <FontAwesomeIcon icon={faEdit} />
+                                                    </Button>
+                                                </ButtonGroup>
+                                            </td>
+
+                                        ) : null
+                                    }
                                 </tr>
                             )
                         }) : (

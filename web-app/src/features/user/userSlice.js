@@ -79,7 +79,6 @@ export const userSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getUserById.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.isLoading = false
         state.isSuccess = true
         state.profile = action.payload

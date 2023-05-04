@@ -43,7 +43,7 @@ const Profile = () => {
         if (isError) {
             console.log(message)
         }
-        console.log("useEffect")
+
         if (!user) {
             navigate('/')
         }
@@ -52,7 +52,7 @@ const Profile = () => {
         return () => {
             dispatch(reset())
         }
-    }, [user, navigate, isError, message, profilePhoto, dispatch]);
+    }, [user, navigate, isError, message, dispatch]);
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -90,7 +90,8 @@ const Profile = () => {
             country
         }
         const formData = new FormData();
-        formData.append('photo', profilePhoto);
+        if (profilePhoto)
+            formData.append('photo', profilePhoto);
         formData.append('userData', JSON.stringify(userData));
         dispatch(editProfile(formData))
     }

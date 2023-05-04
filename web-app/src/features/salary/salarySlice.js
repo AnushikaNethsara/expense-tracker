@@ -74,7 +74,6 @@ export const salarySlice = createSlice({
         state.isLoading = true
       })
       .addCase(getSalary.fulfilled, (state, action) => {
-        console.log(action.payload.salary);
         state.isLoading = false
         state.isSuccess = true
         state.salary = action.payload.salary

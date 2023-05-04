@@ -14,7 +14,6 @@ export const createExpense = createAsyncThunk(
   'expenses/create',
   async (expenseData, thunkAPI) => {
     try {
-      console.log(expenseData);
       const token = thunkAPI.getState().auth.user.token
       return await expenseService.createExpense(expenseData, token)
     } catch (error) {
@@ -69,8 +68,6 @@ export const updateExpense = createAsyncThunk(
   'expenses/update',
   async (expenseData, thunkAPI) => {
     try {
-      console.log(expenseData.id);
-      //console.log(thunkAPI);
       const token = thunkAPI.getState().auth.user.token
       return await expenseService.updateExpense(expenseData.id, expenseData, token)
     } catch (error) {

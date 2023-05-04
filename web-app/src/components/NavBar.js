@@ -29,8 +29,8 @@ const NavBar = () => {
         <Navbar bg="dark" variant="dark" expand="md" className="justify-content-between">
             <Container>
                 <Navbar.Brand as={Link} to="/dashboard">
-                    <FontAwesomeIcon icon={faMoneyBillAlt} className="mx-1" color='#7cac93'/>
-                    Expense-Tracker
+                    <FontAwesomeIcon icon={faMoneyBillAlt} className="mx-1" color='#ffa600' />
+                    <span style={{ color: '#ffa600' }}>Expense</span>-Tracker
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbar-nav" />
                 <Navbar.Collapse id="navbar-nav">

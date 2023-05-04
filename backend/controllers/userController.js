@@ -82,20 +82,20 @@ const EditProfile = asyncHandler(async (req, res) => {
     throw new Error('User ID is required')
   }
 
-  const updatedUser = await User.findByIdAndUpdate(
-    userId,
-    {
-      firstName,
-      lastName,
-      dateOfBirth,
-      addressLine1,
-      addressLine2,
-      city,
-      country,
-      photo: req.file.filename
-    },
-    { new: true }
-  )
+  const newProfileData = {
+    firstName,
+    lastName,
+    dateOfBirth,
+    addressLine1,
+    addressLine2,
+    city,
+    country,
+  }
+
+  if (req.file)
+    newProfileData.photo = req.file.filename
+
+  const updatedUser = await User.findByIdAndUpdate(userId, newProfileData, { new: true })
 
   if (!updatedUser) {
     res.status(400)

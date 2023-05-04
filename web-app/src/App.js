@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Profile from "./pages/Profile";
 import AddExpense from "./pages/AddExpense";
+import CategoryWiseReport from "./reports/CategoryWiseReport";
 
 function App() {
   return (
@@ -16,10 +17,11 @@ function App() {
       <NavBar />
       <Routes>
         <Route exact path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/profile" element={<Profile />} />\
-        <Route path="/addexpense" element={<AddExpense />} />
+        <Route exact path="/register" element={<Register />} />
+        <Route exact path="/dashboard" element={<Dashboard />} />
+        <Route exact path="/profile" element={<Profile />} />\
+        <Route exact path="/addexpense" element={<AddExpense />} />
+        <Route exact path="/report" element={<CategoryWiseReport />} />
       </Routes>
       <Footer />
     </>

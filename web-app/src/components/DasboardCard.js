@@ -7,7 +7,7 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 const DashboardCard = ({ color, heading, text, cardfunction, icon }) => {
     return (
-        <Card className='card-custom' bg={color} text="white">
+        <Card className='card-custom mt-2 text-uppercase font-weight-bold' style={{ backgroundColor: color }} text="white">
             <Card.Body>
                 <Row>
                     <Col>
@@ -21,8 +21,9 @@ const DashboardCard = ({ color, heading, text, cardfunction, icon }) => {
                         ) : (<></>)
                     }
                 </Row>
+                <hr />
                 <Card.Text>
-                    {text.toLocaleString()}{" LKR"}
+                    {text ? text.toLocaleString() : 0}{" LKR"}
                 </Card.Text>
             </Card.Body>
         </Card>
