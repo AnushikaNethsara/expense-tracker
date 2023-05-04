@@ -66,6 +66,7 @@ export const userSlice = createSlice({
         state.isLoading = false
         state.isSuccess = true
         state.profile = action.payload
+        console.log(action.payload);
         toast.success("Successfully Updated")
       })
       .addCase(editProfile.rejected, (state, action) => {

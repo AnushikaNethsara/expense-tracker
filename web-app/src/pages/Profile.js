@@ -11,6 +11,8 @@ import { toast } from 'react-toastify';
 import { getUserById, editProfile } from '../features/user/userSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
+import avatar from "../assets/avatar.png";
+
 
 const Profile = () => {
     const navigate = useNavigate()
@@ -41,7 +43,7 @@ const Profile = () => {
         if (isError) {
             console.log(message)
         }
-
+        console.log("useEffect")
         if (!user) {
             navigate('/')
         }
@@ -50,7 +52,7 @@ const Profile = () => {
         return () => {
             dispatch(reset())
         }
-    }, [user, navigate, isError, message, dispatch]);
+    }, [user, navigate, isError, message, profilePhoto, dispatch]);
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -103,15 +105,15 @@ const Profile = () => {
                 <Col md={6}>
                     <Card className='card-custom'>
                         <Card.Body className='p-5'>
-                           <div className='text-center mb-5'>
+                            <div className='text-center mb-5'>
                                 <Image
-                                    src={"http://localhost:5000/api" + "/public/" + photo}
+                                    src={photo ? process.env.REACT_APP_API_URL + "public/" + photo : avatar}
                                     alt='Profile Picture'
                                     width='100px'
                                     height='100px%'
                                     className='rounded-circle'
                                 />
-                           </div>
+                            </div>
                             <Form onSubmit={onSubmit}>
                                 <Row className="justify-content-center mt-3">
                                     <Col md={6}>

@@ -15,8 +15,8 @@ const DashboardCard = ({ color, heading, text, cardfunction, icon }) => {
                     </Col>
                     {
                         cardfunction ? (
-                            <Col xs="auto">
-                                <FontAwesomeIcon icon={icon} onClick={cardfunction} />
+                            <Col xs="auto" >
+                                <FontAwesomeIcon icon={icon} onClick={cardfunction} style={{ cursor: "pointer" }} />
                             </Col>
                         ) : (<></>)
                     }
