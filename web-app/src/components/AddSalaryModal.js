@@ -12,12 +12,12 @@ const AddSalaryModal = ({ show, handleClose, handleShow }) => {
     const { salary, isLoading, isError, message } = useSelector(
         (state) => state.salary
     )
-    const [newSalary, setNewSalary] = useState(salary ? salary : 0);
+    const [newSalary, setNewSalary] = useState(salary);
 
     useEffect(() => {
 
         dispatch(getSalary())
-
+        setNewSalary(salary);
         return () => {
             dispatch(reset())
         }
@@ -29,7 +29,6 @@ const AddSalaryModal = ({ show, handleClose, handleShow }) => {
         dispatch(createSalary({ salary: newSalary }))
         handleClose();
     }
-
     return (
         <>
             <Modal
@@ -39,7 +38,7 @@ const AddSalaryModal = ({ show, handleClose, handleShow }) => {
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>{salary == 0 ? "Add Salary" : "Edit Salary"}</Modal.Title>
+                    <Modal.Title>{salary == 0 ? "Add Salary" : "Edit Salary"}{salary}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
@@ -51,7 +50,7 @@ const AddSalaryModal = ({ show, handleClose, handleShow }) => {
                                 name="salary"
                                 min={0}
                                 onChange={(e) => setNewSalary(e.target.value)}
-                                value={newSalary}
+                                value={newSalary ? newSalary : salary}
                                 placeholder="Enter salary"
                             />
                         </Form.Group>

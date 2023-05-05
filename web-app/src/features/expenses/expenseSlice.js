@@ -3,6 +3,7 @@ import expenseService from './expenseService'
 
 const initialState = {
   expenses: [],
+  archivedExpenses:[],
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -46,6 +47,61 @@ export const getExpenses = createAsyncThunk(
   }
 )
 
+export const archiveExpense = createAsyncThunk(
+  'expenses/archiveExpense',
+  async (expenseData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await expenseService.updateExpense(expenseData._id, expenseData, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+export const unArchiveExpense = createAsyncThunk(
+  'expenses/unArchiveExpense',
+  async (expenseData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await expenseService.updateExpense(expenseData._id, expenseData, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+
+export const getArchivedExpenses = createAsyncThunk(
+  'expenses/archivedExpenses',
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await expenseService.getArchivedExpenses(token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 export const deleteExpense = createAsyncThunk(
   'expenses/delete',
   async (id, thunkAPI) => {
@@ -69,9 +125,8 @@ export const updateExpense = createAsyncThunk(
   async (expenseData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      return await expenseService.updateExpense(expenseData.id, expenseData, token)
+      return await expenseService.updateExpense(expenseData._id, expenseData, token)
     } catch (error) {
-      console.log(error);
       const message =
         (error.response &&
           error.response.data &&
@@ -106,6 +161,7 @@ export const expenseSlice = createSlice({
         state.isError = true
         state.message = action.payload
       })
+      //get expenses
       .addCase(getExpenses.pending, (state) => {
         state.isLoading = true
       })
@@ -113,7 +169,9 @@ export const expenseSlice = createSlice({
         state.isLoading = false
         state.isSuccess = true
         state.expenses = action.payload
-        const totalAmounts = state.expenses.map(expense => expense.totalAmount);
+        const totalAmounts = state.expenses
+          .filter(expense => !expense.archived)
+          .map(expense => expense.totalAmount);
         const sumTotalAmounts = totalAmounts.reduce((acc, curr) => acc + curr, 0);
         state.totalExpenses = sumTotalAmounts
       })
@@ -122,6 +180,7 @@ export const expenseSlice = createSlice({
         state.isError = true
         state.message = action.payload
       })
+      // delete expenses
       .addCase(deleteExpense.pending, (state) => {
         state.isLoading = true
       })
@@ -140,17 +199,66 @@ export const expenseSlice = createSlice({
         state.isError = true
         state.message = action.payload
       })
-      //expense
+      // update expense
       .addCase(updateExpense.pending, (state) => {
         state.isLoading = true
       })
       .addCase(updateExpense.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        let idToUpdate = state.expenses.findIndex(expense => expense._id === 3);
+        let idToUpdate = state.expenses.findIndex(expense => expense._id === action.payload._id);
         state.expenses[idToUpdate] = action.payload
       })
       .addCase(updateExpense.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      // get archived expenses
+      .addCase(getArchivedExpenses.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getArchivedExpenses.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.archivedExpenses = action.payload
+      })
+      .addCase(getArchivedExpenses.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      // archive expense
+      .addCase(archiveExpense.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(archiveExpense.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.expenses = state.expenses.filter(
+          (expense) => expense._id !== action.payload._id
+        )
+        const totalAmounts = state.expenses.map(expense => expense.totalAmount);
+        const sumTotalAmounts = totalAmounts.reduce((acc, curr) => acc + curr, 0);
+        state.totalExpenses = sumTotalAmounts
+      })
+      .addCase(archiveExpense.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      // unarchive expense
+      .addCase(unArchiveExpense.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(unArchiveExpense.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.archivedExpenses = state.archivedExpenses.filter(
+          (expense) => expense._id !== action.payload._id
+        )
+      })
+      .addCase(unArchiveExpense.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

@@ -23,8 +23,12 @@ const expenseSchema = mongoose.Schema(
         },
         userId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
+            ref: "User", 
             required: true,
+        },
+        archived: {
+            type: Boolean,
+            default: false
         },
     },
     {

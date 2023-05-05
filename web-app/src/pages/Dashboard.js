@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import AddSalaryModal from '../components/AddSalaryModal';
 import ReportsModal from '../components/ReportsModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faPlusCircle, faEdit, faBurger, faCab, faFilm, faLightbulb, faHome, faFile } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faPlusCircle, faEdit, faBurger, faCab, faFilm, faLightbulb, faHome, faFile, faArchive } from '@fortawesome/free-solid-svg-icons';
 import DasboardCategoryCard from '../components/DasboardCategoryCard';
 import { getExpenses, deleteExpense } from '../features/expenses/expenseSlice'
 import constants from '../constants/constants';
@@ -39,7 +39,7 @@ const Dashboard = () => {
         }
         return totals;
     }, {});
-
+    
     useEffect(() => {
         if (isError) {
             console.log(message)
@@ -64,6 +64,10 @@ const Dashboard = () => {
 
     const addExpence = () => {
         navigate('/addexpense')
+    }
+
+    const addArchive = () => {
+        navigate('/archived')
     }
 
     return (
@@ -94,22 +98,26 @@ const Dashboard = () => {
                     <DasboardCategoryCard color="#E6E6FA" heading="Utilities" text={categoryTotals.Utilities} icon={faLightbulb} />
                 </Col>
                 <Col>
-                    <DasboardCategoryCard color="#A0CED9" heading="Rent" text={1500} icon={faHome} />
+                    <DasboardCategoryCard color="#A0CED9" heading="Rent" text={categoryTotals.Rent} icon={faHome} />
                 </Col>
             </Row>
             <AddSalaryModal show={showSalaryModal} handleClose={handleSalaryModalClose} handleShow={handleSalaryModalShow} />
-            <ReportsModal show={showReportModal} handleClose={handleReportModalClose} handleShow={handleReportModalShow} categoryTotals={categoryTotals}/>
+            <ReportsModal show={showReportModal} handleClose={handleReportModalClose} handleShow={handleReportModalShow} categoryTotals={categoryTotals} />
             <div className="d-flex justify-content-end mb-2 mt-4">
                 <Button variant="primary" onClick={addExpence} className=' mx-2'>
                     Add Expence
                     <FontAwesomeIcon icon={faPlus} className='mx-1' />
+                </Button>
+                <Button variant="secondary" onClick={addArchive} className=' mx-2'>
+                    Archived
+                    <FontAwesomeIcon icon={faArchive} className='mx-1' />
                 </Button>
                 <Button variant="success" onClick={handleReportModalShow} >
                     Reports
                     <FontAwesomeIcon icon={faFile} className='mx-1' />
                 </Button>
             </div>
-            <Expenses expenses={expenses} type={constants.DisplayTypes.DASHBOARD}/>
+            <Expenses expenses={expenses} type={constants.DisplayTypes.DASHBOARD} />
         </Container>
     );
 }

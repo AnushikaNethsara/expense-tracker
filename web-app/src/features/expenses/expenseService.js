@@ -25,6 +25,17 @@ const getExpenses = async (token) => {
   return response.data
 }
 
+const getArchivedExpenses = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  const response = await axios.get(API_URL + "expenses/archived", config)
+  return response.data
+}
+
 const deleteExpense = async (id, token) => {
   const config = {
     headers: {
@@ -45,7 +56,6 @@ const updateExpense = async (id, expenseData, token) => {
   }
 
   const response = await axios.put(API_URL + "expenses/" + id, expenseData, config)
-  console.log(response);
   return response.data
 }
 
@@ -53,7 +63,8 @@ const expenseService = {
   createExpense,
   getExpenses,
   deleteExpense,
-  updateExpense
+  updateExpense,
+  getArchivedExpenses
 }
 
 export default expenseService

@@ -71,7 +71,7 @@ const AddExpense = () => {
             return toast.error("Please enter a valid Category")
 
         const expenseData = {
-            id: location.state?.expense?._id ? location.state?.expense?._id : null,
+            _id: location.state?.expense?._id ? location.state?.expense?._id : null,
             expenseName,
             date,
             totalAmount,

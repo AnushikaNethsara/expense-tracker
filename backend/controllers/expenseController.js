@@ -26,7 +26,7 @@ const addExpense = asyncHandler(async (req, res) => {
 
 //get all expenses by id
 const getExpenseByUserId = asyncHandler(async (req, res) => {
-  const expenses = await Expense.find({ userId: req.user.id })
+  const expenses = await Expense.find({ userId: req.user.id, archived: false })
 
   res.status(200).json(expenses)
 })
@@ -73,9 +73,17 @@ const updateExpense = asyncHandler(async (req, res) => {
   res.status(200).json(updatedExpense)
 })
 
+// get all archived expense
+const getArchiveExpense = asyncHandler(async (req, res) => {
+  const archivedExpenses = await Expense.find({ userId: req.user.id, archived: true })
+
+  res.status(200).json(archivedExpenses)
+})
+
 module.exports = {
   addExpense,
   getExpenseByUserId,
   deleteExpense,
-  updateExpense
+  updateExpense,
+  getArchiveExpense
 }

@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Form, Button, Table, ButtonGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getExpenses, reset, deleteExpense } from '../features/expenses/expenseSlice'
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { getExpenses, reset, deleteExpense, archiveExpense } from '../features/expenses/expenseSlice'
+import { faTrash, faEdit, faArchive } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 
 const Expenses = ({ expenses, type }) => {
     const navigate = useNavigate()
@@ -16,6 +15,15 @@ const Expenses = ({ expenses, type }) => {
 
     const editExpense = (expense) => {
         navigate('/addexpense', { state: { expense: expense } });
+    }
+
+    const handleArchiveExpense = (expense) => {
+        console.log(expense);
+        const updatedExpense = {
+            _id: expense._id,
+            archived: true
+        }
+        dispatch(archiveExpense(updatedExpense))
     }
 
     return (
@@ -56,6 +64,9 @@ const Expenses = ({ expenses, type }) => {
                                                     </Button>
                                                     <Button variant="primary" onClick={() => editExpense(item)}>
                                                         <FontAwesomeIcon icon={faEdit} />
+                                                    </Button>
+                                                    <Button variant="secondary" onClick={() => handleArchiveExpense(item)}>
+                                                        <FontAwesomeIcon icon={faArchive} />
                                                     </Button>
                                                 </ButtonGroup>
                                             </td>

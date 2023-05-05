@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Profile from "./pages/Profile";
 import AddExpense from "./pages/AddExpense";
 import CategoryWiseReport from "./reports/CategoryWiseReport";
+import Archived from "./pages/Archived";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route exact path="/profile" element={<Profile />} />\
         <Route exact path="/addexpense" element={<AddExpense />} />
         <Route exact path="/report" element={<CategoryWiseReport />} />
+        <Route exact path="/archived" element={<Archived />} />
       </Routes>
       <Footer />
     </>

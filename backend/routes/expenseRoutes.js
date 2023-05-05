@@ -4,12 +4,14 @@ const {
   addExpense,
   getExpenseByUserId,
   deleteExpense,
-  updateExpense
+  updateExpense,
+  getArchiveExpense
 } = require('../controllers/expenseController')
 
 const { protect } = require('../middleware/authMiddleware')
 
 router.route('/').post(protect, addExpense).get(protect, getExpenseByUserId)
+router.route('/archived').get(protect, getArchiveExpense)
 router.route('/:id').delete(protect, deleteExpense).put(protect, updateExpense)
 
 
