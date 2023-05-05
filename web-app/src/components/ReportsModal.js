@@ -6,7 +6,7 @@ import CategoryWiseReport from '../reports/CategoryWiseReport';
 import { useNavigate } from 'react-router-dom';
 
 
-const GenerateReportModal = ({ show, handleClose }) => {
+const GenerateReportModal = ({ show, handleClose, categoryTotals }) => {
     const componentRef = useRef();
     const navigate = useNavigate()
     const [selectedTypes, setSelectedTypes] = useState({
@@ -27,7 +27,7 @@ const GenerateReportModal = ({ show, handleClose }) => {
 
     const handleViewReport = () => {
         console.log(selectedTypes);
-        navigate('/report', { state: { selectedTypes: selectedTypes } })
+        navigate('/report', { state: { selectedTypes: selectedTypes, categoryTotals: categoryTotals } })
     };
 
     return (

@@ -65,7 +65,7 @@ const Expenses = ({ expenses, type }) => {
                                 </tr>
                             )
                         }) : (
-                            <p className='p-5 text-center'>No Data to Display</p>
+                            <td className='p-5 text-center'>No Data to Display</td>
                         )
                     }
                 </tbody>

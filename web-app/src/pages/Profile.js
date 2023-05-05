@@ -48,7 +48,7 @@ const Profile = () => {
             navigate('/')
         }
         dispatch(getUserById())
-
+        console.log("xxxxxxxxxx");
         return () => {
             dispatch(reset())
         }
@@ -95,9 +95,6 @@ const Profile = () => {
         formData.append('userData', JSON.stringify(userData));
         dispatch(editProfile(formData))
     }
-
-    if (isLoading)
-        <Loading />
 
     return (
         <Container fluid>

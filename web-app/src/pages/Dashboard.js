@@ -40,8 +40,6 @@ const Dashboard = () => {
         return totals;
     }, {});
 
-    console.log(categoryTotals);
-
     useEffect(() => {
         if (isError) {
             console.log(message)
@@ -100,7 +98,7 @@ const Dashboard = () => {
                 </Col>
             </Row>
             <AddSalaryModal show={showSalaryModal} handleClose={handleSalaryModalClose} handleShow={handleSalaryModalShow} />
-            <ReportsModal show={showReportModal} handleClose={handleReportModalClose} handleShow={handleReportModalShow} />
+            <ReportsModal show={showReportModal} handleClose={handleReportModalClose} handleShow={handleReportModalShow} categoryTotals={categoryTotals}/>
             <div className="d-flex justify-content-end mb-2 mt-4">
                 <Button variant="primary" onClick={addExpence} className=' mx-2'>
                     Add Expence

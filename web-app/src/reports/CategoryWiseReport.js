@@ -9,7 +9,8 @@ import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { getExpenses, reset } from '../features/expenses/expenseSlice'
 import constants from '../constants/constants';
 import Expenses from '../components/Expenses';
-
+import DoughnutChart from '../components/DoughnutChart';
+import "../App.css"
 
 const CategoryWiseReportContent = () => {
     const location = useLocation();
@@ -34,13 +35,18 @@ const CategoryWiseReportContent = () => {
 
     return (
         <Container >
-            <h1 className='text-center text-uppercase text-decoration-underline my-3'>
-                Report
+            <h2 className='text-center text-uppercase text-decoration-underline mt-3'>
+                Category Report
+            </h2>
+            <h4 className='text-center text-uppercase text-muted'>
                 (
                 {Object.keys(location.state.selectedTypes)
                     .filter(type => location.state.selectedTypes[type])
                     .join(", ")} )
-            </h1>
+            </h4>
+            <div className="chart-container my-5">
+                <DoughnutChart chartData={location.state.categoryTotals}/>
+            </div>
             <Expenses
                 expenses={selectedExpenses}
                 type={constants.DisplayTypes.REPORT} />
@@ -64,8 +70,6 @@ const CategoryWiseReport = () => {
             dispatch(reset())
         }
     }, [user, navigate, dispatch]);
-
-    console.log(location.state.selectedTypes);
 
 
     return (
