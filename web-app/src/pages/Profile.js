@@ -10,7 +10,7 @@ import "../App.css";
 import { toast } from 'react-toastify';
 import { getUserById, editProfile } from '../features/user/userSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faUpload } from '@fortawesome/free-solid-svg-icons';
 import avatar from "../assets/avatar.png";
 
 
@@ -24,16 +24,15 @@ const Profile = () => {
         (state) => state.user
     )
     const [formData, setFormData] = useState({
-        firstName: profile ? profile.firstName : '',
-        lastName: profile ? profile.lastName : '',
-        dob: profile ? profile.dateOfBirth?.split("T")[0] : '',
-        email: profile ? profile.email : '',
-
-        addressLine1: profile ? profile.addressLine1 : '',
-        addressLine2: profile ? profile.addressLine2 : '',
-        city: profile ? profile.city : '',
-        country: profile ? profile.country : '',
-        photo: profile ? profile.photo : '',
+        firstName: '',
+        lastName: '',
+        dob: '',
+        email: '',
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
+        country: '',
+        photo: ''
     });
     const [profilePhoto, setProfilePhoto] = useState("")
 
@@ -48,11 +47,27 @@ const Profile = () => {
             navigate('/')
         }
         dispatch(getUserById())
-        console.log("xxxxxxxxxx");
+
         return () => {
             dispatch(reset())
         }
     }, [user, navigate, isError, message, dispatch]);
+
+    useEffect(() => {
+        if (profile) {
+            setFormData({
+                firstName: profile.firstName,
+                lastName: profile.lastName,
+                dob: profile.dateOfBirth?.split("T")[0] || '',
+                email: profile.email,
+                addressLine1: profile.addressLine1,
+                addressLine2: profile.addressLine2,
+                city: profile.city,
+                country: profile.country,
+                photo: profile.photo
+            });
+        }
+    }, [profile]);
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -162,13 +177,19 @@ const Profile = () => {
                                         </Form.Group>
                                         <Form.Group>
                                             <Form.Label>Profile Photo</Form.Label>
-                                            <Form.Control
-                                                type="file"
-                                                placeholder="City"
-                                                id="photo"
-                                                name="photo"
-                                                onChange={(e) => setProfilePhoto(e.target.files[0])}
-                                            />
+                                            <div className="custom-file">
+                                                <input
+                                                    type="file"
+                                                    className="custom-file-input"
+                                                    id="photo"
+                                                    name="photo"
+                                                    onChange={(e) => setProfilePhoto(e.target.files[0])}
+                                                />
+                                                <label className="custom-file-label" htmlFor="photo">
+                                                    <FontAwesomeIcon icon={faUpload} className='mx-1' />
+                                                    {photo ? "Upload New Profile Picture" : "Upload Profile Picture"}
+                                                </label>
+                                            </div>
                                         </Form.Group>
                                     </Col>
                                     <Col md={6}>
@@ -218,6 +239,7 @@ const Profile = () => {
                                         </Form.Group>
                                     </Col>
                                 </Row>
+                                <br />
                                 <Row className="justify-content-center align-items-center mt-3">
                                     <Button variant="success" type="submit" className='mt-2' style={{ width: '150px' }}>
                                         <FontAwesomeIcon icon={faSave} className='mx-1' />

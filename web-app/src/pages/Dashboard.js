@@ -48,7 +48,6 @@ const Dashboard = () => {
         if (!user) {
             navigate('/')
         }
-        console.log("message")
         dispatch(getSalary())
         dispatch(getExpenses())
         return () => {
