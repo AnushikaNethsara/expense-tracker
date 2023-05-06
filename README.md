@@ -1,6 +1,14 @@
 # Expense-Tracker Application
 
-This is a personal finance management app that allows users to track their expenses and income. Users can register, login, capture all their expenses and view their profile information.
+This is a personal finance management app that allows users to track their expenses and income. 
+
+### Application Features
+1. Register
+2. Login
+3. Capture expenses  
+4. Profile 
+5. Photo Upload
+6. Report Genaration
 
 ## Usage
 
