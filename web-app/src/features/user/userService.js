@@ -1,7 +1,5 @@
 import axios from 'axios'
 
-const API_URL = "http://localhost:5000/api/users/";
-
 const editProfile = async (id, userData, token) => {
   const config = {
     headers: {
@@ -9,7 +7,7 @@ const editProfile = async (id, userData, token) => {
     },
   }
 
-  const response = await axios.put(API_URL + id, userData, config)
+  const response = await axios.put(process.env.REACT_APP_API_URL +"users/" + id, userData, config)
 
   return response.data
 }
@@ -21,7 +19,7 @@ const getUserById = async (id, token) => {
     },
   }
 
-  const response = await axios.get(API_URL + id, config)
+  const response = await axios.get(process.env.REACT_APP_API_URL + "users/" + id, config)
   return response.data
 }
 

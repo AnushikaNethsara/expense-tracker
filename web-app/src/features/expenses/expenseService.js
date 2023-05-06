@@ -1,7 +1,5 @@
 import axios from 'axios'
 
-const API_URL = "http://localhost:5000/api/";
-
 const createExpense = async (expenseData, token) => {
   const config = {
     headers: {
@@ -9,7 +7,7 @@ const createExpense = async (expenseData, token) => {
     },
   }
 
-  const response = await axios.post(API_URL + "expenses", expenseData, config)
+  const response = await axios.post(process.env.REACT_APP_API_URL + "expenses", expenseData, config)
 
   return response.data
 }
@@ -21,7 +19,7 @@ const getExpenses = async (token) => {
     },
   }
 
-  const response = await axios.get(API_URL + "expenses", config)
+  const response = await axios.get(process.env.REACT_APP_API_URL + "expenses", config)
   return response.data
 }
 
@@ -32,7 +30,7 @@ const getArchivedExpenses = async (token) => {
     },
   }
 
-  const response = await axios.get(API_URL + "expenses/archived", config)
+  const response = await axios.get(process.env.REACT_APP_API_URL + "expenses/archived", config)
   return response.data
 }
 
@@ -43,7 +41,7 @@ const deleteExpense = async (id, token) => {
     },
   }
 
-  const response = await axios.delete(API_URL + "expenses/" + id, config)
+  const response = await axios.delete(process.env.REACT_APP_API_URL + "expenses/" + id, config)
 
   return response.data
 }
@@ -55,7 +53,7 @@ const updateExpense = async (id, expenseData, token) => {
     },
   }
 
-  const response = await axios.put(API_URL + "expenses/" + id, expenseData, config)
+  const response = await axios.put(process.env.REACT_APP_API_URL + "expenses/" + id, expenseData, config)
   return response.data
 }
 

@@ -1,7 +1,5 @@
 import axios from 'axios'
 
-const API_URL = "http://localhost:5000/api/salary";
-
 const createSalary = async (salaryData, token) => {
   const config = {
     headers: {
@@ -9,7 +7,7 @@ const createSalary = async (salaryData, token) => {
     },
   }
 
-  const response = await axios.post(API_URL, salaryData, config)
+  const response = await axios.post(process.env.REACT_APP_API_URL +"salary", salaryData, config)
 
   return response.data
 }
@@ -21,7 +19,7 @@ const getSalary = async (token) => {
     },
   }
 
-  const response = await axios.get(API_URL, config)
+  const response = await axios.get(process.env.REACT_APP_API_URL + "salary", config)
   return response.data
 }
 
